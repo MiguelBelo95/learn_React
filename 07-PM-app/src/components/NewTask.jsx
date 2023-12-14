@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function NewTask({onAdd, projectId}) {
+export default function NewTask({ onAdd }) {
   const [enteredTask, setEnteredTask] = useState('');
 
   function handleChange(e) {
@@ -11,7 +11,7 @@ export default function NewTask({onAdd, projectId}) {
     if (enteredTask.trim() === '') {
       return;
     }
-    onAdd(enteredTask, projectId);
+    onAdd(enteredTask);
     setEnteredTask('');
   }
 
@@ -24,6 +24,6 @@ export default function NewTask({onAdd, projectId}) {
     />
     <button
       onClick={handleClick}
-     className="text-stone-700 hover:text-stone-950 ">Add Task</button>
+      className="text-stone-700 hover:text-stone-950 ">Add Task</button>
   </div>
 }

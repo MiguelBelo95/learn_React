@@ -2,7 +2,7 @@ import Input from './Input.jsx'
 import { useState, useRef } from 'react';
 import Modal from './Modal.jsx';
 
-export default function NewProject({ cancel, save }) {
+export default function NewProject({ onAdd, onCancel }) {
   const title = useRef();
   const description = useRef();
   const date = useRef();
@@ -13,6 +13,23 @@ export default function NewProject({ cancel, save }) {
     description: '',
     date: ''
   };
+
+  function handleSave() {
+    const enteredTitle = title.current.value;
+    const enteredDescription = description.current.value;
+    const enteredDate = date.current.value;
+
+    if (enteredTitle.trim() === '' || enteredDescription.trim() === '' || enteredDate.trim() === '') {
+      modal.current.open();
+      return;
+    }
+
+    onAdd({
+      title: enteredTitle,
+      description: enteredDescription,
+      date: enteredDate
+    })
+  }
 
   function update() {
     const enteredTitle = title.current.value;
@@ -40,8 +57,8 @@ export default function NewProject({ cancel, save }) {
     </Modal>
     <div className='w-[35rem] mt-16'>
       <menu className='flex items-center justify-end gap-4 my-4'>
-        <li><button className='text-stone-800 hover:text-stone-950' onClick={() => cancel()}>Cancel</button></li>
-        <li><button className='px-6 py-2 rounded-md text-stone-50 bg-stone-800 hover:bg-stone-950' onClick={() => update(project)}>Save</button></li>
+        <li><button className='text-stone-800 hover:text-stone-950' onClick={onCancel}>Cancel</button></li>
+        <li><button className='px-6 py-2 rounded-md text-stone-50 bg-stone-800 hover:bg-stone-950' onClick={handleSave}>Save</button></li>
       </menu>
       <div>
         <Input ref={title} label='Title' />
